@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "935270616099",
+    "project_id": "travel-application-1234",
+    "storage_bucket": "travel-application-1234.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935270616099:android:8383aad99d5392c7e67596",
+        "android_client_info": {
+          "package_name": "com.example.gecaranetrinidadfinals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB61ldNegnaaA_XZHCVJnBuLpzSIcruQIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
