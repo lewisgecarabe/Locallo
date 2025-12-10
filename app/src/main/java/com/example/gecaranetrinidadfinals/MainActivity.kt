@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val edtPost: EditText = findViewById(R.id.edtPost)
-        val btnPost: Button = findViewById(R.id.btn_post)
+        val edtPost: EditText = findViewById(R.id.edtPost_LG)
+        val btnPost: Button = findViewById(R.id.btn_post_LG)
 
         val con = FirebaseFirestore.getInstance()
 

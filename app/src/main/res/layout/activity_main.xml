@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Say Something"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.158"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.154" />
 
     <EditText
-        android:id="@+id/edtPost"
+        android:id="@+id/edtPost_LG"
         android:layout_width="305dp"
         android:layout_height="256dp"
         android:layout_marginTop="44dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/btn_post"
+        android:id="@+id/btn_post_LG"
         android:layout_width="126dp"
         android:layout_height="53dp"
         android:layout_marginTop="56dp"
@@ -40,6 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPost" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPost_LG" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

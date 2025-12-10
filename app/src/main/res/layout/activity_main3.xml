@@ -85,7 +85,7 @@
                     android:text="Likes" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/likeBtn_LG"
                     android:layout_width="7dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -102,7 +102,8 @@ class LogInActivity : AppCompatActivity() {
 
             auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener {
                 Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity3::class.java)
+                val intent = Intent(this, dashboard::class.java)
+                startActivity(intent)
             }
                 .addOnFailureListener {
                     e ->
