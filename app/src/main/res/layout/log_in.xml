@@ -1,83 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#A65050"
-    tools:context=".LogInActivity">
+    android:background="#FFFCF3">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="Log In"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="120dp"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/edtTxt_emailLogIN_LG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        <!-- SIGN IN TITLE -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/edtTxt_passLogin_LG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtTxt_emailLogIN_LG" />
+            <ImageView
+                android:id="@+id/localo_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/locallo_icon" />
 
-    <Button
-        android:id="@+id/btn_login_LG"
-        android:layout_width="170dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="52dp"
-        android:text="Log in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtTxt_passLogin_LG" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Sign In"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="OR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_LG" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_google_LG"
-        android:layout_width="214dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#5D786D6D"
-        android:text="Continue with Google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- EMAIL FIELD -->
+        <TextView
+            android:id="@+id/SignInText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:text="Welcome back, explorer." />
+
+        <LinearLayout
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/mail"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <EditText
+                android:id="@+id/edtTxt_emailLogIN_LG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- PASSWORD FIELD -->
+        <LinearLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/password"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <EditText
+                android:id="@+id/edtTxt_passLogin_LG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <!-- FORGOT PASSWORD -->
+        <TextView
+            android:id="@+id/forget_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:text="Forget Password?"
+            android:textColor="#7C8BA0"
+            android:textSize="12sp" />
+
+        <!-- LOGIN BUTTON -->
+
+        <!-- SIGN UP -->
+        <Button
+            android:id="@+id/btn_sbmt_LG"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#20BBCA"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Log In"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/don_t_have_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins"
+            android:text="Don’t have account? Sign Up"
+            android:textColor="#3B4054"
+            android:textSize="14sp" />
+
+        <!-- OR DIVIDER -->
+        <TextView
+            android:id="@+id/or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="or Login with"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_google_LG"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="#FFFFFF"
+            android:drawableStart="@drawable/icon_google"
+            android:drawablePadding="12dp"
+
+            android:drawableTint="@android:color/transparent"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Google"
+            android:textColor="#444444"
+            android:textSize="14sp"
+            app:cornerRadius="15dp"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="1dp" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

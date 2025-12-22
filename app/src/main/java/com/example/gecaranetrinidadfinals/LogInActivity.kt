@@ -29,7 +29,7 @@ class LogInActivity : AppCompatActivity() {
 
         val edtPassword : EditText = findViewById(R.id.edtTxt_passLogin_LG)
         val edtEmail: EditText = findViewById(R.id.edtTxt_emailLogIN_LG)
-        val btnSubmit: Button = findViewById(R.id.btn_login_LG)
+        val btnSubmit: Button = findViewById(R.id.btn_sbmt_LG)
         val btnGoogle: Button = findViewById(R.id.btn_google_LG)
 
         //start connection with auth

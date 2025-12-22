@@ -119,9 +119,7 @@ class dashboard : AppCompatActivity() {
                                 "nooflikes_LG" to likeby.size
                             ))
 
-                    }
-                    img_likes.setImageResource(R.drawable.after_baseline_thumb_up_24)
-                }
+                    } }
 
 
 
