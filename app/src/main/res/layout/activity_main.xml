@@ -29,7 +29,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_input_area"
         android:gravity="top|start"
-        android:hint="What's on your mind?"
+        android:hint="What's on yourr mind?"
         android:inputType="textMultiLine"
         android:padding="24dp"
         android:shadowColor="#3C3434"
