@@ -22,9 +22,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2196F3"
+            android:background="#F4B913"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@drawable/person" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -205,7 +205,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Monument to\nSalavat Yulaev"
+                                android:text="Palawan\nPhilippines"
                                 android:textColor="#FFFFFF"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -245,7 +245,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Historic\nCenter City"
+                                android:text="Siargao\nPhilippines"
                                 android:textColor="#FFFFFF"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />

@@ -49,9 +49,9 @@
                         android:id="@+id/img_avatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@android:drawable/sym_def_app_icon"
                         android:background="#009688"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/person" />
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
