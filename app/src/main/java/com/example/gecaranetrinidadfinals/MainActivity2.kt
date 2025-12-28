@@ -1,5 +1,6 @@
 package com.example.gecaranetrinidadfinals
 
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
@@ -7,16 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.text.format.DateFormat
+import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.ArrayList
-
+import com.bumptech.glide.Glide
 
 class MainActivity2 : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main2)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -24,80 +27,101 @@ class MainActivity2 : AppCompatActivity() {
         }
 
         val vlayout: LinearLayout = findViewById(R.id.linearLayout_LG)
-
-        //start of Database
         val conn = FirebaseFirestore.getInstance()
-        conn.collection("tbl_posts").get().addOnSuccessListener {
-            records ->
 
-            for (record in records){
-                val inflater = LayoutInflater.from(this)
-                val template = inflater.inflate(R.layout.activity_main3,vlayout,false)
+        // 🔹 LOAD POSTS
+        conn.collection("tbl_posts")
+            .orderBy("timestamp")
+            .get()
+            .addOnSuccessListener { records ->
 
-                //textview from cardview
-                val txtContent: TextView = template.findViewById(R.id.txtContent_LG)
-                val txtName: TextView = template.findViewById(R.id.txtUser_LG)
-                val txtLikes: TextView = template.findViewById(R.id.txtLikes_LG)
-                val txtComments: TextView = template.findViewById(R.id.txtComments_LG)
-                val txtDate: TextView = template.findViewById(R.id.textDate_LG)
-                val img_likes : ImageView = template.findViewById(R.id.likeBtn_LG)
+                for (record in records) {
 
-                //likeby nooflikes .size .container. add .remove
+                    val template = LayoutInflater.from(this)
+                        .inflate(R.layout.activity_main3, vlayout, false)
+
+                    // Views
+                    val txtContent: TextView = template.findViewById(R.id.txt_description)
+                    val txtName: TextView = template.findViewById(R.id.txt_post_username)
+                    val txtLikes: TextView = template.findViewById(R.id.txt_like_count)
+                    val txtComments: TextView = template.findViewById(R.id.txt_comment_count)
+                    val imgLike: ImageView = template.findViewById(R.id.btn_like)
+                    val imgPost: ImageView = template.findViewById(R.id.img_post_main)
+                    val txtLocation: TextView = template.findViewById(R.id.txt_post_location)
+                    val txtCategory: TextView = template.findViewById(R.id.txt_post_category)
+                    val imgProfile : ImageView = template.findViewById(R.id.img_avatar)
+
+                    // Firestore fields
+                    val content = record.getString("content") ?: ""
+                    val userId = record.getString("user_id") ?: ""
+                    val imageUrl = record.getString("image_url") ?: ""
+                    val likes = record.getLong("likes_count") ?: 0
+                    val comments = record.getLong("comments_count") ?: 0
+                    val postId = record.id
+                    val createdAt = record.getTimestamp("timestamp")
+                    val category = record.getString("category") ?: ""
+                    val location = record.getString("location") ?: ""
 
 
-                //field values
-                val content = record.getString("content_LG")
-                val name = record.getString("userid_LG")
-                val noLikes = record.getLong("nooflikes_LG")
-                val noComment = record.getLong("noofcomments_LG")
-                val created_at = record.getTimestamp("createDate_LG")
-                val likeby = record.get("likeby") as? ArrayList<String> ?: arrayListOf()
-                val id = record.id
+                    // Display text
+                    txtContent.text = content
+                    txtLikes.text = likes.toString()
+                    txtComments.text = comments.toString()
+                    txtCategory.text = category.toString()
+                    txtLocation.text = location.toString()
 
-                img_likes.setOnClickListener {
-
-                    if (likeby.contains(name)){
-                        likeby.remove(name)
-                        conn.collection("tbl_posts").document(id).update(
-                            mapOf(
-                                " likeby" to likeby,
-                                "nooflikes_LG" to likeby.size
-                            )).addOnSuccessListener {
-                                txtLikes.text = likeby.size.toString()
-                            img_likes.setImageResource(R.drawable.baseline_thumb_up_24)
-                        }
-
-                    }else{
-                        likeby.add(name.toString())
-                        conn.collection("tbl_posts").document(id).update(
-                        mapOf(
-                           " likeby" to likeby,
-                            "nooflikes_LG" to likeby.size
-                        ))
-
+                    // 🔹 LOAD USER NAME FROM tbl_users
+                    if (userId.isNotEmpty()) {
+                        conn.collection("tbl_users")
+                            .document(userId)
+                            .get()
+                            .addOnSuccessListener { userDoc ->
+                                txtName.text = userDoc.getString("name") ?: "User"
+                                val profileUrl = userDoc.getString("profile_picture") ?: ""
+                                if (profileUrl.isNotEmpty()) {
+                                    Glide.with(this)
+                                        .load(profileUrl)
+                                        .placeholder(R.drawable.person)
+                                        .into(imgProfile)
+                                }}
+                    } else {
+                        txtName.text = "User"
                     }
-                    img_likes.setImageResource(R.drawable.after_baseline_thumb_up_24)
+
+
+
+                    // 🔹 LOAD POST IMAGE
+                    if (imageUrl.isNotEmpty()) {
+                        Glide.with(this)
+                            .load(imageUrl)
+                            .placeholder(R.drawable.place2)
+                            .into(imgPost)
+                    } else {
+                        imgPost.visibility = View.GONE
+                    }
+
+                    // 🔹 LIKE BUTTON (FIXED)
+                    imgLike.setOnClickListener {
+                        val currentLikes = txtLikes.text.toString().toLong()
+                        val newLikes = currentLikes + 1
+
+                        conn.collection("tbl_posts")
+                            .document(postId)
+                            .update("likes_count", newLikes)
+                            .addOnSuccessListener {
+                                txtLikes.text = newLikes.toString()
+                                imgLike.setImageResource(R.drawable.baseline_thumb_up_24)
+                            }
+                    }
+
+                    // (Optional date formatting – structure kept)
+                    if (createdAt != null) {
+                        val date = createdAt.toDate()
+                        DateFormat.format("MM dd  hh:mm a", date)
+                    }
+
+                    vlayout.addView(template)
                 }
-
-
-
-                if (created_at != null){
-                    val date = created_at.toDate()
-                    val dateFormmated = DateFormat.format("MM dd \n hh:mm", date)
-
-                    txtDate.text = dateFormmated
-
-                }
-                //display values
-                txtContent.text = content
-                txtName.text = name
-                txtLikes.text = noLikes.toString()
-                txtComments.text = noComment.toString()
-
-                vlayout.addView(template)
             }
-        }
-
-
     }
 }

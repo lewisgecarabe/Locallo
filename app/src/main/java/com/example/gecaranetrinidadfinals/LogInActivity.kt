@@ -20,97 +20,96 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.log_in)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.loginScrollView)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
 
         }
 
-        val edtPassword : EditText = findViewById(R.id.edtTxt_passLogin_LG)
-        val edtEmail: EditText = findViewById(R.id.edtTxt_emailLogIN_LG)
-        val btnSubmit: Button = findViewById(R.id.btn_sbmt_LG)
-        val btnGoogle: Button = findViewById(R.id.btn_google_LG)
+                val edtPassword: EditText = findViewById(R.id.edtTxt_passLogin_LG)
+                val edtEmail: EditText = findViewById(R.id.edtTxt_emailLogIN_LG)
+                val btnSubmit: Button = findViewById(R.id.btn_sbmt_LG)
+                val btnGoogle: Button = findViewById(R.id.btn_google_LG)
+                val signUpLink: TextView = findViewById(R.id.don_t_have_)
 
-        //start connection with auth
-        val auth = FirebaseAuth.getInstance()
-        val con = FirebaseFirestore.getInstance()
+                val auth = FirebaseAuth.getInstance()
+                val db = FirebaseFirestore.getInstance()
 
+                // 🔹 GOOGLE SIGN-IN CONFIG
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build()
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))  // Web client ID
-            .requestEmail()
-            .build()
+                val googleClient = GoogleSignIn.getClient(this, gso)
 
-        // Creates Google Sign-In client using the above settings
-        val googleClient = GoogleSignIn.getClient(this, gso)
+                // 🔹 GOOGLE SIGN-IN RESULT HANDLER
+                val googleLauncher = registerForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
+                ) { result ->
 
-        // --------------------------------------------------------------
-        // STEP 2 — Activity Result Launcher (handles result of Google Sign In)
-        // This replaces deprecated onActivityResult()
-        // --------------------------------------------------------------
-        val googleLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
-            // Google returns an intent → convert to task
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                    try {
+                        val account = task.getResult(ApiException::class.java)
+                        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
-            try {
-                // STEP 3 — Get the Google Account (may throw ApiException)
-                val account = task.getResult(ApiException::class.java)
+                        auth.signInWithCredential(credential).addOnSuccessListener {
+                            val user = auth.currentUser!!
+                            val uid = user.uid
 
-                // STEP 4 — Convert Google account to Firebase credential
-                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                            // ✅ MATCH tbl_users SCHEMA
+                            val userData = mapOf(
+                                "user_id" to uid,
+                                "name" to (user.displayName ?: "Google User"),
+                                "profile_picture" to (user.photoUrl?.toString() ?: ""),
+                                "travel_history" to arrayListOf<String>()
+                            )
 
-                auth.signInWithCredential(credential).addOnSuccessListener {
-                    val userid = auth.currentUser!!.uid
-                    val name = auth.currentUser!!.uid
-                    val email = auth.currentUser!!.uid
+                            db.collection("tbl_users").document(uid)
+                                .set(userData)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                                    startActivity(Intent(this, dashboard::class.java))
+                                    finish()
+                                }
+                        }
 
-                    val values = mapOf(
-                        "name" to name,
-                        "email" to email
-                    )
+                    } catch (e: Exception) {
+                        Toast.makeText(this, "Google Login Failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
-                    con.collection("tbl_users").document(userid).set(values).addOnSuccessListener {
-                        Toast.makeText(this, "account created", Toast.LENGTH_SHORT).show()
+                // 🔹 GOOGLE LOGIN BUTTON
+                btnGoogle.setOnClickListener {
+                    googleLauncher.launch(googleClient.signInIntent)
+                }
 
-                        val intent = Intent(this, dashboard::class.java)
-                        startActivity(intent)
+                // 🔹 EMAIL/PASSWORD LOGIN
+                btnSubmit.setOnClickListener {
+                    val email = edtEmail.text.toString().trim()
+                    val pass = edtPassword.text.toString().trim()
+
+                    if (email.isEmpty() || pass.isEmpty()) {
+                        Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
                     }
 
+                    auth.signInWithEmailAndPassword(email, pass)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, dashboard::class.java))
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Login failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
 
-            } catch (e: Exception) {
-                // If Google sign-in fails
-                Toast.makeText(this, "Google Login Failed", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
-        // --------------------------------------------------------------
-        // STEP 8 — When Google button is clicked → launch Google Sign-In
-        // --------------------------------------------------------------
-        btnGoogle.setOnClickListener {
-            googleLauncher.launch(googleClient.signInIntent)
-        }
-
-        btnSubmit.setOnClickListener {
-            val email = edtEmail.text.toString()
-            val pass = edtPassword.text.toString()
-
-            auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener {
-                Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, dashboard::class.java)
-                startActivity(intent)
-            }
-                .addOnFailureListener {
-                    e ->
-                    Toast.makeText(this, "Log in failed: " + e.message, Toast.LENGTH_SHORT).show()
+                // 🔹 GO TO SIGN UP
+                signUpLink.setOnClickListener {
+                    startActivity(Intent(this, SignUpActivity::class.java))
                 }
-
+            }
         }
-
-    }
-}

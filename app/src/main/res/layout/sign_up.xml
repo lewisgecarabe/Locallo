@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/signupScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFCF3">
@@ -72,11 +73,11 @@
 
             <EditText
                 android:id="@+id/edtTxt_Name_LG"
-                android:background="@android:color/transparent"
-                android:backgroundTint="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="text" />
@@ -96,11 +97,11 @@
 
             <EditText
                 android:id="@+id/edtTxt_Email_LG"
-                android:background="@android:color/transparent"
-                android:backgroundTint="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="text" />
@@ -121,11 +122,11 @@
             <!-- EYE ICON (toggle) -->
             <EditText
                 android:id="@+id/edtTxt_Pass_LG"
-                android:background="@android:color/transparent"
-                android:backgroundTint="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword" />

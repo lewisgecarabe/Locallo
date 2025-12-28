@@ -29,7 +29,7 @@ class LoaderActivity : AppCompatActivity() {
 
         logo.startAnimation(fadeIn)
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, SignUpActivity::class.java))
+            startActivity(Intent(this, LogInActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
 
             finish()

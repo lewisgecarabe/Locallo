@@ -23,13 +23,13 @@
 
     <EditText
         android:id="@+id/edtPost_LG"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_width="359dp"
+        android:layout_height="193dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_input_area"
         android:gravity="top|start"
-        android:hint="What's on yourr mind?"
+        android:hint="Share your trip!"
         android:inputType="textMultiLine"
         android:padding="24dp"
         android:shadowColor="#3C3434"
@@ -40,17 +40,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
     <LinearLayout
         android:id="@+id/action_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPost_LG">
+        app:layout_constraintTop_toBottomOf="@+id/edt_location">
 
         <ImageView
+            android:id="@+id/btnImage"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/bg_icon_square"
@@ -77,6 +80,21 @@
             app:tint="#757575" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/btn_post_LG"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_row"
+        app:layout_constraintVertical_bias="0.086" />
+
     <Button
         android:id="@+id/btn_post_LG"
         android:layout_width="match_parent"
@@ -92,6 +110,32 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <!-- CATEGORY -->
+
+    <!-- LOCATION -->
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_input_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPost_LG" />
+
+    <EditText
+        android:id="@+id/edt_location"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="12dp"
+        android:hint="Location (e.g. Baguio City)"
+        android:background="@drawable/bg_input_area"
+        app:layout_constraintTop_toBottomOf="@id/spinner_category" />
 
     <LinearLayout
         android:id="@+id/bottom_nav_bar"
